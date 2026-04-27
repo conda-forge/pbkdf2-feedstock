@@ -1,0 +1,43 @@
+schema_version: 1
+
+context:
+  name: pbkdf2
+  version: "1.3"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/pbkdf2-${{ version }}.tar.gz
+  sha256: ac6397369f128212c43064a2b4878038dab78dab41875364554aaf2a684e6979
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+
+tests:
+  - python:
+      imports:
+        - pbkdf2
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  summary: PKCS  # 5 v2.0 PBKDF2 Module
+  license: MIT
+  license_file: LICENSE
+  homepage: http://www.dlitz.net/software/python-pbkdf2/
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
